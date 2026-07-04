@@ -7,7 +7,7 @@ class Paciente:
     nombre:str 
     apellido:str
     edad:int
-    telefono: str
+    telefono:str
     id_paciente: Optional[int] = None
 
     def __post_init__(self):
@@ -20,7 +20,7 @@ class Paciente:
         if not patron_telefono.match(self.telefono):
             raise ValueError("El teléfono debe tener el formato XXXX-XXXX")
 
-
+    
     def __eq__(self, other):
         if not isinstance(other, Paciente):
             return False
