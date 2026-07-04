@@ -7,10 +7,10 @@ class Paciente:
     nombre:str 
     apellido:str
     edad:int
-    telefono: Optional[str] = None 
-    id_paciente= Optional[int] = None
+    telefono: str
+    id_paciente: Optional[int] = None
 
-    def __pos_init__(self):
+    def __post_init__(self):
         if len(self.nombre) > 40:
             raise ValueError("El nombre no puede tener más de 40 caracteres")
         if len(self.apellido) > 40:
