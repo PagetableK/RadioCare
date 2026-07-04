@@ -6,11 +6,11 @@ import re
 class Radiologo:
     nombre:str 
     apellido:str
-    telefono:int
+    telefono:str
     correo:str
     id_radiologo:Optional[int] = None
 
-    def __pos_init__(self):
+    def __post_init__(self):
         if len(self.nombre) > 40:
             raise ValueError("El nombre no puede tener más de 40 caracteres")
         if len(self.apellido) > 40:

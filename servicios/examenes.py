@@ -3,7 +3,7 @@ from dominio.pacientes import Paciente
 from dominio.personal import Radiologo
 from dominio.clinica import  Sucursal
 from typing import Optional
-from datetime import date, time
+from datetime import datetime
 
 @dataclass
 class TipoExamen:
@@ -12,41 +12,11 @@ class TipoExamen:
     costo:float
     preindicaciones:str
     id_tipo_examen:Optional[int] = None
-
-    def __pos_init__(self):
-        if len(self.nombre) > 40:
-            raise ValueError("El nombre no puede tener más de 40 caracteres")
-        if len(self.apellido) > 50:
-            raise ValueError("La descripción no puede tener más de 50 caracteres")
-
-@dataclass
-class OrganoExamen:
-    nombre_organo:str
-    longitud_organo:float
-    ancho_organo:float
-    volumen_organo:float
-    id_organo_examen:Optional[int] = None
     
-    def __post_init__(self):
-        organos = ["Riñon izquierdo", "Riñon derecho", "Útero", "Hígado", "Próstata", "Vejiga", "Páncreas"]
-        if self.nombre_organo.capitalize() not in organos:
-            raise ValueError(f"Órgano inválido. \nÓrganos válidos:{organos}")
-        
-
-    def __eq__(self, other):
-        if not isinstance(other, OrganoExamen):
-            return False
-        return self.id_organo_examen == other.id_organo_examen
-    
-@dataclass(frozen=True)
-class ImagenExamen:
-    url:str
-    descripcion:str    
 
 @dataclass
 class Examen:
-    fecha:date
-    hora:time
+    fecha:datetime
     estado_examen:str
     tipo_examen:TipoExamen
     paciente:Paciente
@@ -71,3 +41,27 @@ class Examen:
         if not isinstance(other, Examen):
             return False
         return self.id_examen == other.id_examen
+
+@dataclass
+class OrganoExamen:
+    nombre_organo:str
+    longitud_organo:float
+    ancho_organo:float
+    volumen_organo:float
+    id_organo_examen:Optional[int] = None
+    
+    def post__init__(self):
+        organos = ["Riñon izquierdo", "Riñon derecho", "Útero", "Hígado", "Próstata", "Vejiga", "Páncreas"]
+        if self.nombre_organo.capitalize() not in organos:
+            raise ValueError(f"Órgano inválido. \nÓrganos válidos:{organos}")
+        
+
+    def __eq__(self, other):
+        if not isinstance(other, OrganoExamen):
+            return False
+        return self.id_organo_examen == other.id_organo_examen
+    
+@dataclass(frozen=True)
+class ImagenExamen:
+    url:str
+    descripcion:str
